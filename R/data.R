@@ -11,6 +11,18 @@ data_scatter = function(x, y, series = NULL, type = 'scatter') {
   obj
 }
 
+data_pie = function(x, y, series = NULL, type = 'scatter') {
+  xy = unname(cbind(x, y))
+  if (is.null(series)) return(list(list(type = type, data = xy)))
+  xy = split(as.data.frame(xy), series)
+  nms = names(xy)
+  obj = list()
+  for (i in seq_along(xy)) {
+    obj[[i]] = list(name = nms[i], type = type, data = unname(as.matrix(xy[[i]])))
+  }
+  obj
+}
+
 data_bar = function(x, y, series = NULL, type = 'bar') {
 
   # plot the frequencies of x when y is not provided
